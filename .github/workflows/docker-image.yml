@@ -30,7 +30,7 @@ jobs:
           -
             name: open-local
             image: dongjiang1989/open-local
-            file: ./hack/build/Dockerfile
+            file: ./Dockerfile
             platforms: linux/amd64,linux/arm64
 
     steps:
