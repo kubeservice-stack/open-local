@@ -31,14 +31,14 @@ jobs:
         id: meta-amd64
         uses: docker/metadata-action@v3
         with:
-          images: thebeatles1994/open-local
+          images: dongjiang1989/open-local
           tags: |
             type=ref,event=tag
       - name: Docker arm64 meta
         id: meta-arm64
         uses: docker/metadata-action@v3
         with:
-          images: thebeatles1994/open-local
+          images: dongjiang1989/open-local
           tags: |
             type=ref,event=tag,suffix=-arm64
       - name: Login to DockerHub
