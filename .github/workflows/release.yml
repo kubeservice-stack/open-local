@@ -2,8 +2,11 @@ name: Release
 
 on:
   push:
+    branches: [ "main" ]
     tags:
-      - 'v*'
+      - 'v*' 
+  pull_request:
+    branches: [ "main" ]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
