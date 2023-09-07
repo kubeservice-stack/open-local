@@ -43,8 +43,17 @@ type driverOptions struct {
 	grpcConnectionTimeout   int
 	mode                    string
 	useNodeHostname         bool
+	enableSpdk              bool
 	extenderSchedulerNames  []string
 	frameworkSchedulerNames []string
+
+	konnectivityUDS        string
+	konnectivityProxyHost  string
+	konnectivityProxyPort  int
+	konnectivityProxyMode  string
+	konnectivityClientCert string
+	konnectivityClientKey  string
+	konnectivityCACert     string
 
 	kubeclient  kubernetes.Interface
 	localclient clientset.Interface
@@ -59,6 +68,13 @@ var defaultDriverOptions = driverOptions{
 	useNodeHostname:         false,
 	extenderSchedulerNames:  []string{"default-scheduler"},
 	frameworkSchedulerNames: []string{},
+	konnectivityUDS:         "",
+	konnectivityProxyHost:   "",
+	konnectivityProxyPort:   0,
+	konnectivityProxyMode:   "",
+	konnectivityClientCert:   "",
+	konnectivityClientKey:   "",
+	konnectivityCACert:      "",
 }
 
 // Option configures a Driver
@@ -170,6 +186,12 @@ func WithUseNodeHostname(useNodeHostname bool) Option {
 	}
 }
 
+func WithEnableSpdk(enableSpdk bool) Option {
+	return func(o *driverOptions) {
+		o.enableSpdk = enableSpdk
+	}
+}
+
 func WithExtenderSchedulerNames(extenderSchedulerNames []string) Option {
 	return func(o *driverOptions) {
 		o.extenderSchedulerNames = extenderSchedulerNames
@@ -197,6 +219,18 @@ func WithLocalClient(localclient clientset.Interface) Option {
 func WithSnapshotClient(snapclient snapshot.Interface) Option {
 	return func(o *driverOptions) {
 		o.snapclient = snapclient
+	}
+}
+
+func WithKonnectivity(uds, host string, port int, mode, clientCert, clientKey, caCert string) Option {
+	return func(o *driverOptions) {
+		o.konnectivityUDS = uds
+		o.konnectivityProxyHost = host
+		o.konnectivityProxyPort = port
+		o.konnectivityProxyMode = mode
+		o.konnectivityClientCert = clientCert
+		o.konnectivityClientKey = clientKey
+		o.konnectivityCACert = caCert
 	}
 }
 
